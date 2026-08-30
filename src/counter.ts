@@ -20,17 +20,14 @@ export interface CounterOptions {
   console?: Console
 }
 
-export interface Total {
-  /**
-   * A lower bound on what the whole group is counting: the total every
-   * participant reached over the last closed interval, or this participant's
-   * own unsent buffer where that is larger — or is all there is.
-   */
-  count: number
-}
-
 export interface Increment {
-  (amount?: number): Total
+  /**
+   * Adds `amount` — one by default — to this participant's buffer, and returns
+   * a lower bound on what the whole group is counting: the total every
+   * participant reached over the last closed interval, or this participant's
+   * own unsent buffer where that is larger, or is all there is.
+   */
+  (amount?: number): number
   /** Stops the counter. Sends nothing, waits for nothing, and is idempotent. */
   close(): void
 }
@@ -172,7 +169,7 @@ export const counter = (options: CounterOptions): Increment => {
     log.info('counter stopped', {})
   }
 
-  const increment = (amount = 1): Total => {
+  const increment = (amount = 1): number => {
     if (!Number.isSafeInteger(amount))
       throw new TypeError(`comcount: \`amount\` must be a safe integer, got ${amount}`)
 
@@ -195,7 +192,7 @@ export const counter = (options: CounterOptions): Increment => {
       timer.unref()
     }
 
-    return { count: count() }
+    return count()
   }
 
   return Object.assign(increment, { close })

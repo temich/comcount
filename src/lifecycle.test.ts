@@ -173,7 +173,7 @@ describe('lifecycle', () => {
 
     // The one it never got round to sending is still in the buffer: closing
     // sends nothing, so nothing after it leaves the process either.
-    assert.equal(worker.increment(3).count, 4)
-    assert.equal(worker.increment(4).count, 8)
+    assert.equal(worker.increment(3), 4)
+    assert.equal(worker.increment(4), 8)
   })
 })

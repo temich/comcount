@@ -51,8 +51,8 @@ describe('count', () => {
 
     // Nothing has been sent yet — the flush is armed on a timer, so it cannot
     // have run inside this call.
-    assert.equal(worker.increment(5).count, 5)
-    assert.equal(worker.increment(3).count, 8)
+    assert.equal(worker.increment(5), 5)
+    assert.equal(worker.increment(3), 8)
   })
 
   it('reports the group total once an interval has closed', async () => {
@@ -63,7 +63,7 @@ describe('count', () => {
 
     // Ten each, and the buffer is empty by then, so nothing but the group's
     // own number can produce twenty.
-    await settle(() => assert.equal(workers[0]!.increment(0).count, 20), INTERVAL * 4)
+    await settle(() => assert.equal(workers[0]!.increment(0), 20), INTERVAL * 4)
   })
 
   it('takes the larger of the group total and its own buffer', async () => {
@@ -72,11 +72,11 @@ describe('count', () => {
 
     for (const worker of workers) worker.increment(10)
 
-    await settle(() => assert.equal(workers[0]!.increment(0).count, 20), INTERVAL * 4)
+    await settle(() => assert.equal(workers[0]!.increment(0), 20), INTERVAL * 4)
 
     // The group's last interval came to twenty; this participant has on its own
     // already outrun that, and the larger number is the one that gets reported.
-    assert.equal(workers[0]!.increment(80).count, 80)
+    assert.equal(workers[0]!.increment(80), 80)
   })
 
   it('falls back to its own buffer when the tick stalls', async () => {
@@ -87,15 +87,15 @@ describe('count', () => {
     // participant's own ten sitting unsent in the buffer.
     for (const each of [worker, spawn(name)]) each.increment(10)
 
-    await settle(() => assert.equal(worker.increment(0).count, 20), INTERVAL * 4)
+    await settle(() => assert.equal(worker.increment(0), 20), INTERVAL * 4)
 
     outage.stall()
 
     // The total it is still holding stops counting as known once nothing has
     // refreshed it for two intervals.
     await sleep(INTERVAL * 3)
-    assert.equal(worker.increment(0).count, 0)
-    assert.equal(worker.increment(4).count, 4)
+    assert.equal(worker.increment(0), 0)
+    assert.equal(worker.increment(4), 4)
   })
 
   it('falls back to its own buffer after close', async () => {
@@ -105,11 +105,11 @@ describe('count', () => {
 
     for (const each of workers) each.increment(10)
 
-    await settle(() => assert.equal(worker.increment(0).count, 20), INTERVAL * 4)
+    await settle(() => assert.equal(worker.increment(0), 20), INTERVAL * 4)
 
     worker.increment.close()
 
-    assert.equal(worker.increment(0).count, 0)
-    assert.equal(worker.increment(7).count, 7)
+    assert.equal(worker.increment(0), 0)
+    assert.equal(worker.increment(7), 7)
   })
 })

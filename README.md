@@ -20,7 +20,7 @@ import { counter } from 'comcount'
 const increment = counter({ redis, name: 'requests', interval: 5_000 })
 
 // wherever the thing being counted happens
-const { count } = increment(1)
+const count = increment(1)
 
 if (count > BUDGET) shed()
 ```
@@ -44,13 +44,13 @@ group came to.
 Nothing happens until the first `increment`: a counter that is never incremented
 never opens a conversation with Redis.
 
-## What `count` is
+## What it returns
 
-Not a report on the last interval. It is the best lower bound available on what
-the group is counting right now:
+Not a report on the last interval. The number `increment` hands back is the best
+lower bound available on what the group is counting right now:
 
 ```
-count = max(
+increment(n) = max(
   the group's total over the last closed interval,
   this participant's own buffer, not yet sent
 )
@@ -67,9 +67,9 @@ When the group's number is not known — nothing has come back yet, the previous
 interval has no key, or nothing has refreshed it for two intervals — what is
 left is the buffer, which at least is honest about being local.
 
-So `count` is built for a threshold: `count > x` answers whether the group has
-at least reached `x`, and never claims more than it can stand behind. It is not
-built for reporting a rate to three digits.
+So the number is built for a threshold: `increment(1) > x` answers whether the
+group has at least reached `x`, and never claims more than it can stand behind.
+It is not built for reporting a rate to three digits.
 
 ## What it guarantees
 

@@ -148,7 +148,7 @@ describe('console', () => {
     worker.increment(10)
     other.increment(10)
 
-    await settle(() => assert.equal(worker.increment(0).count, 20), INTERVAL * 5)
+    await settle(() => assert.equal(worker.increment(0), 20), INTERVAL * 5)
 
     outage.stall()
 
@@ -175,7 +175,7 @@ describe('console', () => {
 
     // Twenty can only come from a round trip that happened, so the tick ran
     // through every line the broken console threw on.
-    await settle(() => assert.equal(worker.increment(0).count, 20), INTERVAL * 6)
+    await settle(() => assert.equal(worker.increment(0), 20), INTERVAL * 6)
 
     worker.increment.close()
     await sleep(INTERVAL)

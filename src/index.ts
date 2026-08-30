@@ -1,5 +1,5 @@
 export { type Console } from './console.ts'
-export { counter, type CounterOptions, type Increment, type Total } from './counter.ts'
+export { counter, type CounterOptions, type Increment } from './counter.ts'
 export { ADD } from './lua.ts'
 export {
   base,
