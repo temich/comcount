@@ -1,9 +1,9 @@
 {
-  "name": "dsum",
-  "version": "0.1.0",
+  "name": "comcount",
+  "version": "0.0.1",
   "description": "Distributed sum with Redis",
   "bugs": {
-    "url": "https://github.com/temich/dsum/issues"
+    "url": "https://github.com/temich/comcount/issues"
   },
   "license": "MIT",
   "author": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/temich/dsum.git"
+    "url": "git+https://github.com/temich/comcount.git"
   },
   "files": [
     "dist",

@@ -7,7 +7,7 @@ A running total that several processes add to at once, kept in Redis.
 ## Usage
 
 ```sh
-npm install dsum
+npm install comcount
 ```
 
 ## Contributing
