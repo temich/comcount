@@ -1,7 +1,7 @@
 {
   "name": "comcount",
   "version": "0.0.1",
-  "description": "Distributed sum with Redis",
+  "description": "Distributed counting with Redis",
   "bugs": {
     "url": "https://github.com/temich/comcount/issues"
   },
