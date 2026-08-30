@@ -11,7 +11,8 @@ npm install
 npm run check
 ```
 
-`REDIS_URL` points them at another server.
+`REDIS_URL` points them at another server, and `TEST_INTERVAL` raises the
+interval they run at if the machine is slow.
 
 Branch off `dev`, and open a pull request back into it. A pull request needs a
 passing `check` run, an approving review, and every review thread resolved.
