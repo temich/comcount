@@ -10,6 +10,7 @@ jobs:
     env:
       HUSKY: 0
       REDIS_URL: redis://localhost:6379
+      TEST_INTERVAL: 600
 
     services:
       redis:
