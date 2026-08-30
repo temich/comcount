@@ -37,7 +37,7 @@ group came to.
 | ---------- | -------- | ----------------------------------------------------------------------------------------------------------- |
 | `redis`    | required | An [ioredis](https://github.com/redis/ioredis) or [node-redis](https://github.com/redis/node-redis) client. |
 | `name`     | required | Counter name, for example `requests`. Participants sharing it share a total.                                |
-| `interval` | required | Interval length in milliseconds. See below on choosing one.                                                 |
+| `interval` | required | Interval length in milliseconds.                                                                            |
 | `prefix`   | `''`     | Prepended to the key, for namespacing.                                                                      |
 | `console`  |          | Where to report what the counter is doing.                                                                  |
 
@@ -127,20 +127,6 @@ the buffer.
 
 Interval keys expire after three intervals. Nothing accumulates, and nothing has
 to be cleaned up.
-
-### Choosing an interval
-
-> TL;DR: set it to 5 seconds.
-
-The floor is a Redis round trip with room to spare: the interval has to be long
-enough that losing one in `interval / round trip` of them to drift is a rounding
-error rather than a tax.
-
-Above that it is a straight trade. A longer interval means fewer round trips —
-one per participant per interval, whatever the call rate — and a coarser,
-staler number: `count` describes an interval that closed before the last flush,
-so it can be up to two intervals behind. A shorter interval means a fresher
-number, more round trips, and a larger share of intervals lost to drift.
 
 ### Shutting down
 

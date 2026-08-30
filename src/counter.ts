@@ -8,7 +8,7 @@ export interface CounterOptions {
   store?: Store
   /** Counter name, for example `requests`. */
   name: string
-  /** Interval length in milliseconds. See the README on choosing one. */
+  /** Interval length in milliseconds. */
   interval: number
   /** Prepended to the key, for namespacing. */
   prefix?: string
